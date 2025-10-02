@@ -17,6 +17,10 @@ public class TodoServiceTest {
     // tests will construct mocks manually
   }
 
+  /**
+   * Verify that create calls save on the repository and returns a non-null result
+   * with the id set.
+   */
   @Test
   public void testCreate_callsSaveAndReturns() {
     TodoRepository repo = org.mockito.Mockito.mock(TodoRepository.class);

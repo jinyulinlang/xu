@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Debug (Launch) - TodoApplicationTests",
+      "request": "launch",
+      "mainClass": "com.example.todo.TodoApplicationTests",
+      "projectName": "todo-backend"
+    },
+    // 帮我补全 controller 的单元测试类的配置文件信息
+    {
+      "type": "java",
+      "name": "Debug (Launch) - TodoControllerTests",
+      "request": "launch",
+      "mainClass": "com.example.todo.TodoControllerTests",
+      "projectName": "todo-backend"
+    },
+    {
+      "type": "java",
+      "name": "Debug (Launch) - TodoApplication",
+      "request": "launch",
+      "mainClass": "com.example.todo.TodoApplication",
+      "projectName": "todo-backend"
+    }
+  ]
+}

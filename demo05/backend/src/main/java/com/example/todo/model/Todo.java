@@ -24,15 +24,19 @@ public class Todo {
   private String description;
 
   @Column(nullable = false)
+  @Builder.Default
   private boolean completed = false;
 
   @Column(nullable = false)
+  @Builder.Default
   private int priority = 0;
 
   private Instant dueDate;
 
   @Column(nullable = false, updatable = false)
+  @Builder.Default
   private Instant createdAt = Instant.now();
 
+  @Builder.Default
   private Instant updatedAt = Instant.now();
 }

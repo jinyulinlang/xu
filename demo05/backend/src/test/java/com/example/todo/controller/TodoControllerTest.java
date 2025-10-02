@@ -1,6 +1,5 @@
 package com.example.todo.controller;
 
-import com.example.todo.controller.TodoController;
 import com.example.todo.model.Todo;
 import com.example.todo.service.TodoService;
 import com.fasterxml.jackson.databind.ObjectMapper;

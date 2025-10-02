@@ -1,0 +1,54 @@
+package com.example.todo.service;
+
+import com.example.todo.model.Todo;
+import com.example.todo.repository.TodoRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class TodoServiceTest {
+  @BeforeEach
+  public void init() {
+    // tests will construct mocks manually
+  }
+
+  @Test
+  public void testCreate_callsSaveAndReturns() {
+    TodoRepository repo = org.mockito.Mockito.mock(TodoRepository.class);
+    TodoService service = new TodoService(repo);
+
+    Todo input = Todo.builder().title("Test").description("d").priority(1).build();
+    org.mockito.Mockito.when(repo.save(org.mockito.ArgumentMatchers.any(Todo.class))).thenAnswer(invocation -> {
+      Todo t = invocation.getArgument(0);
+      t.setId(1L);
+      return t;
+    });
+
+    Todo created = service.create(input);
+
+    assertThat(created).isNotNull();
+    assertThat(created.getId()).isEqualTo(1L);
+    org.mockito.Mockito.verify(repo, org.mockito.Mockito.times(1)).save(org.mockito.ArgumentMatchers.any(Todo.class));
+  }
+
+  @Test
+  public void testList_withNoCompleted_usesPaging() {
+    TodoRepository repo = org.mockito.Mockito.mock(TodoRepository.class);
+    TodoService service = new TodoService(repo);
+
+    Todo t = Todo.builder().id(1L).title("a").build();
+    org.mockito.Mockito.when(repo.findAll(org.mockito.ArgumentMatchers.any(PageRequest.class)))
+        .thenReturn(new PageImpl<>(List.of(t)));
+
+    List<Todo> out = service.list(null, 10, 0);
+    assertThat(out).hasSize(1);
+    assertThat(out.get(0).getId()).isEqualTo(1L);
+    org.mockito.Mockito.verify(repo, org.mockito.Mockito.times(1))
+        .findAll(org.mockito.ArgumentMatchers.any(PageRequest.class));
+  }
+}

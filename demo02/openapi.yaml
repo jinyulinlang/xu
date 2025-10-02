@@ -1,0 +1,225 @@
+openapi: 3.0.3
+info:
+  title: 项目任务管理系统 API
+  version: 1.0.0
+  description: OpenAPI 规范（简化版），覆盖项目、任务、任务更新与通知的核心端点，供前端与后端对接参考。
+servers:
+  - url: http://localhost:8000/api/v1
+paths:
+  /auth/login:
+    post:
+      summary: 用户登录，返回 token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                      refreshToken:
+                        type: string
+  /projects:
+    post:
+      summary: 创建项目
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreate'
+      responses:
+        '201':
+          description: created
+    get:
+      summary: 查询项目列表
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: size
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: list
+  /projects/{projectId}:
+    get:
+      summary: 获取项目详情
+      parameters:
+        - in: path
+          name: projectId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: project
+  /projects/{projectId}/tasks:
+    post:
+      summary: 在项目下创建任务
+      parameters:
+        - in: path
+          name: projectId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreate'
+      responses:
+        '201':
+          description: created
+    get:
+      summary: 获取项目下任务列表
+      parameters:
+        - in: path
+          name: projectId
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: status
+          schema:
+            type: string
+      responses:
+        '200':
+          description: tasks
+  /tasks/{taskId}:
+    get:
+      summary: 获取任务详情
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: task
+    patch:
+      summary: 更新任务
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskUpdate'
+      responses:
+        '200':
+          description: updated
+  /tasks/{taskId}/updates:
+    post:
+      summary: 新增任务更新记录
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskUpdateRecord'
+      responses:
+        '201':
+          description: created
+components:
+  schemas:
+    ProjectCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        deptId:
+          type: integer
+        ownerId:
+          type: integer
+        memberIds:
+          type: array
+          items:
+            type: integer
+        planStartDate:
+          type: string
+          format: date
+        planEndDate:
+          type: string
+          format: date
+    TaskCreate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        ownerId:
+          type: integer
+        assigneeIds:
+          type: array
+          items:
+            type: integer
+        planStart:
+          type: string
+          format: date
+        planEnd:
+          type: string
+          format: date
+    TaskUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        ownerId:
+          type: integer
+        assigneeIds:
+          type: array
+          items:
+            type: integer
+        status:
+          type: string
+        percentComplete:
+          type: integer
+    TaskUpdateRecord:
+      type: object
+      properties:
+        userId:
+          type: integer
+        status:
+          type: string
+        percentComplete:
+          type: integer
+        comment:
+          type: string

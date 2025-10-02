@@ -1,0 +1,77 @@
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --muted:#9aa7bf;
+  --accent:#3b82f6;
+  --glass: rgba(255,255,255,0.04);
+}
+
+*{box-sizing:border-box}
+body,html,#root{height:100%;margin:0;font-family:Inter, Roboto, Arial, sans-serif;background:linear-gradient(180deg,#071021 0%, #0f1724 100%);color:#e6eef8}
+
+.header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent);border-bottom:1px solid rgba(255,255,255,0.03)}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:40px;height:40px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;color:white}
+.title{font-size:16px;font-weight:600}
+.header-actions .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 12px;border-radius:8px;margin-left:8px}
+.header-actions .btn.ghost{background:transparent}
+
+.container{display:flex;gap:16px;padding:18px}
+.sidebar{width:260px;background:var(--glass);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03)}
+.main{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03)}
+
+.project-list .list-title{font-weight:600;color:var(--muted);margin-bottom:8px}
+.project-list ul{list-style:none;padding:0;margin:0}
+.project-list li{padding:10px;border-radius:8px;cursor:pointer;margin-bottom:8px;background:transparent;border:1px solid transparent}
+.project-list li:hover{background:rgba(255,255,255,0.02)}
+.project-list li.active{background:linear-gradient(90deg, rgba(59,130,246,0.12), rgba(59,130,246,0.06));border-color:rgba(59,130,246,0.2)}
+.p-name{font-weight:600}
+.p-meta{font-size:12px;color:var(--muted)}
+
+.project-header{display:flex;justify-content:space-between;align-items:center}
+.project-header h2{margin:0}
+.meta{color:var(--muted);font-size:13px}
+
+.task-area{display:flex;gap:16px;margin-top:16px}
+.board{display:flex;gap:12px;flex:1}
+.lane{background:rgba(255,255,255,0.02);border-radius:8px;padding:8px;min-width:220px;display:flex;flex-direction:column;max-height:60vh;overflow:auto}
+.lane-header{font-weight:700;margin-bottom:8px}
+.card{background:var(--card);padding:10px;border-radius:8px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.03)}
+.card-title{font-weight:600}
+.card-meta{font-size:12px;color:var(--muted);margin-bottom:8px}
+.progress{position:relative;height:10px;background:rgba(255,255,255,0.03);border-radius:6px;overflow:hidden;margin-bottom:8px}
+.progress .bar{height:100%;background:linear-gradient(90deg,var(--accent),#06b6d4)}
+.progress .percent{position:absolute;right:8px;top:-18px;font-size:12px;color:var(--muted)}
+.card-actions{display:flex;gap:8px;align-items:center}
+.card-actions select, .card-actions input[type=range]{flex:1}
+
+.task-actions{display:flex;gap:8px;margin-bottom:12px}
+.card-foot{display:flex;gap:8px;margin-top:8px}
+
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center}
+.modal{background:var(--card);padding:16px;border-radius:10px;max-width:520px;width:100%;border:1px solid rgba(255,255,255,0.04)}
+.modal h3{margin-top:0}
+.modal label{display:block;margin-bottom:8px;color:var(--muted)}
+.modal input,.modal textarea{width:100%;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+
+.gantt-list{list-style:none;padding:0;margin:8px 0}
+
+.gantt{width:320px;background:rgba(255,255,255,0.02);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.03)}
+.gantt-title{font-weight:700;margin-bottom:8px}
+.gantt-placeholder{height:180px;border-radius:8px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px}
+
+/* Responsive */
+@media (max-width:900px){
+  .container{flex-direction:column}
+  .sidebar{width:100%}
+  .task-area{flex-direction:column}
+  .gantt{width:100%}
+  .board{overflow:auto}
+}
+
+@media (max-width:480px){
+  .header .title{display:none}
+  .sidebar{padding:8px}
+  .project-header h2{font-size:16px}
+}
